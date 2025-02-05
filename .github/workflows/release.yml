@@ -35,7 +35,6 @@ jobs:
       id: version
       run: |
         set -e
-        set -x
         task_processor_version=$(grep "<task-processor.version>" pom.xml | grep -v '<!--' | sed -E 's/.*<task-processor.version>([^<]+)<\/task-processor.version>.*/\1/')
         [ -z "$task_processor_version" ] && echo "Failed to extract task-processor.version from pom.xml" && exit 1
         
