@@ -9,9 +9,9 @@ This is a Spring Boot application that demonstrates how to use the [`task-proces
 mvn clean install;
 mvn spring-boot:run;
 ```
-The application will start on port `8080` and you can access the following endpoints:
+The application will start on port `8082` and you can access the following endpoints:
 
-- `POST http://localhost:8080/api/v1/notify`
+- `POST http://localhost:8082/api/v1/notify`
 
 ```json
 {
@@ -24,13 +24,13 @@ You can use the postman collection in the `postman` folder to test the endpoint.
 or you can use the following curl command:
 
 ```bash
-curl -X POST "http://localhost:8080/api/v1/notify" -H "Content-Type: application/json" -d "{\"personName\":\"Person Name\",\"email\":\"email@gmail.com\",\"message\":\"Appointment Tomorrow 2\"}"
+curl -X POST "http://localhost:8082/api/v1/notify" -H "Content-Type: application/json" -d "{\"personName\":\"Person Name\",\"email\":\"email@gmail.com\",\"message\":\"Appointment Tomorrow 2\"}"
 
 ```
 
 ## H2 Console
 
-You can also access the H2 console at `http://localhost:8080/h2-console` with the following test credentials:
+You can also access the H2 console at `http://localhost:8082/h2-console` with the following test credentials:
 ```properties
 JDBC URL:jdbc:h2:mem:testdb
 User Name: sa

@@ -1,4 +1,4 @@
-package com.example.taskprocessor;
+package com.pcistudio.example.taskprocessor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

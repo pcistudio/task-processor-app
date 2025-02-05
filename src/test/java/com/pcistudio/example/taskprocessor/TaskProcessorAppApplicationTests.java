@@ -1,4 +1,4 @@
-package com.example.taskprocessor;
+package com.pcistudio.example.taskprocessor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

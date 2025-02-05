@@ -36,6 +36,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<task-processor.version>0.0.37</task-processor.version>
+<!--		<task-processor.version>0.0.38-SNAPSHOT</task-processor.version>-->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -62,8 +63,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!-- h2 console -->
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 
 		<!-- task-processor dependencies start -->
 		<dependency>

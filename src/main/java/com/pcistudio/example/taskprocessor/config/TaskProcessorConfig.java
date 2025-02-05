@@ -1,7 +1,7 @@
-package com.example.taskprocessor.config;
+package com.pcistudio.example.taskprocessor.config;
 
 import com.pcistudio.task.processor.config.AbstractHandlersConfiguration;
-import com.example.taskprocessor.notification.Notification;
+import com.pcistudio.example.taskprocessor.notification.Notification;
 import com.pcistudio.task.procesor.HandlerProperties;
 import com.pcistudio.task.procesor.handler.TaskHandler;
 import com.pcistudio.task.procesor.register.HandlerManagerImpl;
