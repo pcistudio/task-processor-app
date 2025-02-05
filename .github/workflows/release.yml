@@ -19,7 +19,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
   release:
-    if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -34,12 +34,19 @@ jobs:
     - name: Get  with Maven
       id: version
       run: |
+        set -e
+        set -x
         task_processor_version=$(grep "<task-processor.version>" pom.xml | grep -v '<!--' | sed -E 's/.*<task-processor.version>([^<]+)<\/task-processor.version>.*/\1/')
-        if [ gh release view $task_processor_version ]; then
-          task_processor_version="${task_processor_version}-${{ github.run_number }}"
+        [ -z "$task_processor_version" ] && echo "Failed to extract task-processor.version from pom.xml" && exit 1
+        
+        release_version="v${task_processor_version}"
+        if gh release view "$release_version" > /dev/null; then
+          release_version="${release_version}-${{ github.run_number }}"
         fi
-        task_processor_version="v${task_processor_version}"
-        echo "number=$task_processor_version" | tee $GITHUB_OUTPUT
+        
+        echo "number=$release_version" | tee $GITHUB_OUTPUT
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
       run: |
         gh release create ${{ env.VERSION }} -t "Release ${{ env.VERSION }}" -n "Release ${{ env.VERSION }}"
