@@ -1,0 +1,47 @@
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+  release:
+    if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Get  with Maven
+      id: version
+      run: |
+        task_processor_version="1.2.3"
+        if [ gh release view $task_processor_version ]; then
+          task_processor_version="${task_processor_version}-${{ github.run_number }}"
+        fi
+        echo "number=$task_processor_version" | tee $GITHUB_OUTPUT
+    - name: Create Release
+      run: |
+        gh release create ${{ env.VERSION }} -t "Release ${{ env.VERSION }}" -n "Release ${{ env.VERSION }}"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION: ${{ steps.version.outputs.number }}
