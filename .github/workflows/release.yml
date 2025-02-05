@@ -44,6 +44,8 @@ jobs:
         fi
         
         echo "number=$release_version" | tee $GITHUB_OUTPUT
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
       run: |
         gh release create ${{ env.VERSION }} -t "Release ${{ env.VERSION }}" -n "Release ${{ env.VERSION }}"
