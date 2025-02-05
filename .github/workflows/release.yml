@@ -41,7 +41,7 @@ jobs:
         
         release_version="v${task_processor_version}"
         if gh release view "$release_version" > /dev/null; then
-          release_version="${release_version}-${run_number}"
+          release_version="${release_version}-${{ github.run_number }}"
         fi
         
         echo "number=$release_version" | tee $GITHUB_OUTPUT
