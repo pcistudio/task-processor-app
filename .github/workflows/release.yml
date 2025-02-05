@@ -19,7 +19,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
   release:
-    if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' ||  github.ref_name == 'release' }}
     runs-on: ubuntu-latest
     needs: build
     steps:
