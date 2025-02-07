@@ -1,7 +1,8 @@
 package com.pcistudio.example.taskprocessor.config;
 
+import com.pcistudio.example.taskprocessor.notification.EmailNotification;
+import com.pcistudio.example.taskprocessor.notification.SmsNotification;
 import com.pcistudio.task.processor.config.AbstractHandlersConfiguration;
-import com.pcistudio.example.taskprocessor.notification.Notification;
 import com.pcistudio.task.procesor.HandlerProperties;
 import com.pcistudio.task.procesor.handler.TaskHandler;
 import com.pcistudio.task.procesor.register.HandlerManagerImpl;
@@ -15,26 +16,42 @@ import java.util.Set;
 @Slf4j
 @Configuration
 public class TaskProcessorConfig extends AbstractHandlersConfiguration {
-    public static final String HANDLER = "email_notification";
+    public static final String TABLE = "notifications";
 
     @Override
-    protected void addTask(HandlerManagerImpl.Builder builder) {
+    protected void configureHandler(HandlerManagerImpl.Builder builder) {
         builder.register(
                 HandlerProperties.builder()
-                        .handlerName(HANDLER)
-                        .tableName(HANDLER)
+                        .handlerName("email")
+                        .tableName(TABLE)
                         .requeueInterval(120000)
                         .processingExpire(Duration.ofMinutes(2))
                         .transientExceptions(Set.of(TransientDataAccessException.class))
-                        .taskHandler(new NotifyHandler())
+                        .taskHandler(new EmailNotifyHandler())
+                        .build()
+        ).register(
+                HandlerProperties.builder()
+                        .handlerName("sms")
+                        .tableName(TABLE)
+                        .requeueInterval(120000)
+                        .processingExpire(Duration.ofMinutes(2))
+                        .transientExceptions(Set.of(TransientDataAccessException.class))
+                        .taskHandler(new SmsNotifyHandler())
                         .build()
         );
     }
 
-    static class NotifyHandler implements TaskHandler<Notification> {
+    static class EmailNotifyHandler implements TaskHandler<EmailNotification> {
         @Override
-        public void process(Notification notification) {
-            log.info("Notification for {}<{}> message: {}", notification.personName(), notification.email(), notification.message());
+        public void process(EmailNotification notification) {
+            log.info("Email for {}<{}> message: {}", notification.personName(), notification.email(), notification.message());
+        }
+    }
+
+    static class SmsNotifyHandler implements TaskHandler<SmsNotification> {
+        @Override
+        public void process(SmsNotification notification) {
+            log.info("SMS for {}<{}> message: {}", notification.personName(), notification.phone(), notification.message());
         }
     }
 

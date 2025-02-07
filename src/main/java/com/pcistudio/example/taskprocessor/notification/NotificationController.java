@@ -20,19 +20,35 @@ import java.time.Duration;
 @RequestMapping("/api/v1/notify")
 public class NotificationController {
 
-    private TaskWriter writer;
+    private final TaskWriter writer;
 
     public NotificationController(TaskWriter writer) {
         Assert.notNull(writer, "writer is required");
         this.writer = writer;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> notify(@RequestBody @Valid @NotNull Notification notification) {
+    @PostMapping("/email")
+    public ResponseEntity<Void> notifyViaEmail(@RequestBody @Valid @NotNull EmailNotification notification) {
         Assert.notNull(notification, "notification is required");
+
         writer.writeTasks(
                 TaskParams.builder()
-                        .handlerName("email_notification")
+                        .handlerName("email")
+                        .payload(notification)
+                        .delay(Duration.ofMinutes(1))
+                        .build()
+        );
+        
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/sms")
+    public ResponseEntity<Void> notifyViaSms(@RequestBody @Valid @NotNull SmsNotification notification) {
+        Assert.notNull(notification, "notification is required");
+
+        writer.writeTasks(
+                TaskParams.builder()
+                        .handlerName("sms")
                         .payload(notification)
                         .delay(Duration.ofMinutes(1))
                         .build()
