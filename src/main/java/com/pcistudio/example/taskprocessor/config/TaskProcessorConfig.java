@@ -1,10 +1,10 @@
 package com.pcistudio.example.taskprocessor.config;
 
-import com.pcistudio.task.processor.config.AbstractHandlersConfiguration;
 import com.pcistudio.example.taskprocessor.notification.Notification;
 import com.pcistudio.task.procesor.HandlerProperties;
 import com.pcistudio.task.procesor.handler.TaskHandler;
 import com.pcistudio.task.procesor.register.HandlerManagerImpl;
+import com.pcistudio.task.processor.config.AbstractHandlersConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.TransientDataAccessException;
@@ -16,9 +16,11 @@ import java.util.Set;
 @Configuration
 public class TaskProcessorConfig extends AbstractHandlersConfiguration {
     public static final String HANDLER = "email_notification";
+    public static final String RESET = "\u001B[0m";
+    public static final String GREEN = "\u001B[32m";
 
     @Override
-    protected void addTask(HandlerManagerImpl.Builder builder) {
+    protected void configureHandler(HandlerManagerImpl.Builder builder) {
         builder.register(
                 HandlerProperties.builder()
                         .handlerName(HANDLER)
@@ -34,7 +36,7 @@ public class TaskProcessorConfig extends AbstractHandlersConfiguration {
     static class NotifyHandler implements TaskHandler<Notification> {
         @Override
         public void process(Notification notification) {
-            log.info("Notification for {}<{}> message: {}", notification.personName(), notification.email(), notification.message());
+            log.info(GREEN + "Notification for {}<{}> message: {}" + RESET, notification.personName(), notification.email(), notification.message());
         }
     }
 

@@ -11,6 +11,8 @@ mvn spring-boot:run;
 ```
 The application will start on port `8082` and you can access the following endpoints:
 
+> NOTE: You can play with the task `delay`. See [NotificationController](src/main/java/com/pcistudio/example/taskprocessor/notification/NotificationController.java).
+
 - `POST http://localhost:8082/api/v1/notify`
 
 ```json

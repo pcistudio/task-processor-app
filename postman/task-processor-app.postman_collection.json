@@ -6,34 +6,106 @@
 	},
 	"item": [
 		{
-			"name": "notify",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"personName\": \"Person Name\",\n    \"email\": \"email@gmail.com\",\n    \"message\": \"Appointment Tomorrow 2\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "main branch",
+			"item": [
+				{
+					"name": "notify",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"personName\": \"Person Name\",\n    \"email\": \"email@gmail.com\",\n    \"message\": \"Appointment Tomorrow 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/notify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"notify"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8082/api/v1/notify",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8082",
-					"path": [
-						"api",
-						"v1",
-						"notify"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "2-handlers-same-table",
+			"item": [
+				{
+					"name": "notify sms",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"personName\": \"Person Name\",\n    \"phone\": \"123456789\",\n    \"message\": \"Appointment Tomorrow 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/notify/sms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"notify",
+								"sms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "notify email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"personName\": \"Person Name\",\n    \"email\": \"email@gmail.com\",\n    \"message\": \"Appointment Tomorrow 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/notify/email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"notify",
+								"email"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

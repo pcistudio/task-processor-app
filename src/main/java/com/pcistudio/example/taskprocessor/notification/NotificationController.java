@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Duration;
-
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/notify")
 public class NotificationController {
 
-    private TaskWriter writer;
+    private final TaskWriter writer;
 
     public NotificationController(TaskWriter writer) {
         Assert.notNull(writer, "writer is required");
@@ -34,7 +32,7 @@ public class NotificationController {
                 TaskParams.builder()
                         .handlerName("email_notification")
                         .payload(notification)
-                        .delay(Duration.ofMinutes(1))
+//                        .delay(Duration.ofMinutes(1))
                         .build()
         );
         return ResponseEntity.status(HttpStatus.CREATED).build();

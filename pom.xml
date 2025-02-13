@@ -35,8 +35,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<task-processor.version>0.0.37</task-processor.version>
-<!--		<task-processor.version>0.0.38-SNAPSHOT</task-processor.version>-->
+		<task-processor.version>0.0.38</task-processor.version>
 	</properties>
 	<dependencies>
 		<dependency>
