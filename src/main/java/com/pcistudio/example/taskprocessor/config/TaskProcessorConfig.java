@@ -17,6 +17,8 @@ import java.util.Set;
 @Configuration
 public class TaskProcessorConfig extends AbstractHandlersConfiguration {
     public static final String TABLE = "notifications";
+    public static final String RESET = "\u001B[0m";
+    public static final String GREEN = "\u001B[32m";
 
     @Override
     protected void configureHandler(HandlerManagerImpl.Builder builder) {
@@ -44,14 +46,14 @@ public class TaskProcessorConfig extends AbstractHandlersConfiguration {
     static class EmailNotifyHandler implements TaskHandler<EmailNotification> {
         @Override
         public void process(EmailNotification notification) {
-            log.info("Email for {}<{}> message: {}", notification.personName(), notification.email(), notification.message());
+            log.info(GREEN + "Email for {}<{}> message: {}" + RESET, notification.personName(), notification.email(), notification.message());
         }
     }
 
     static class SmsNotifyHandler implements TaskHandler<SmsNotification> {
         @Override
         public void process(SmsNotification notification) {
-            log.info("SMS for {}<{}> message: {}", notification.personName(), notification.phone(), notification.message());
+            log.info(GREEN + "SMS for {}<{}> message: {}" + RESET, notification.personName(), notification.phone(), notification.message());
         }
     }
 
