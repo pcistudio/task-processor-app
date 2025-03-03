@@ -1,17 +1,17 @@
 package com.pcistudio.example.taskprocessor.notification;
 
+import com.pcistudio.task.procesor.task.TaskMetadata;
 import com.pcistudio.task.procesor.task.TaskParams;
 import com.pcistudio.task.procesor.writer.TaskWriter;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 
@@ -19,7 +19,7 @@ import java.time.Duration;
 @RestController
 @RequestMapping("/api/v1/notify")
 public class NotificationController {
-
+    private static final Logger logger = LoggerFactory.getLogger(NotificationController.class);
     private final TaskWriter writer;
 
     public NotificationController(TaskWriter writer) {
@@ -43,16 +43,17 @@ public class NotificationController {
     }
 
     @PostMapping("/sms")
-    public ResponseEntity<Void> notifyViaSms(@RequestBody @Valid @NotNull SmsNotification notification) {
+    public ResponseEntity<Void> notifyViaSms(@RequestParam(required=false, defaultValue = "1") Integer delayMin,  @RequestBody @Valid @NotNull SmsNotification notification) {
         Assert.notNull(notification, "notification is required");
 
-        writer.writeTasks(
+        TaskMetadata sms = writer.writeTasks(
                 TaskParams.builder()
                         .handlerName("sms")
                         .payload(notification)
-                        .delay(Duration.ofMinutes(1))
+                        .delay(Duration.ofMinutes(delayMin))
                         .build()
         );
+        logger.info("sms notification save taskId={} with delayMin={} min", sms.getId(), delayMin);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

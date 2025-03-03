@@ -36,6 +36,7 @@ public class TaskProcessorConfig extends AbstractHandlersConfiguration {
                         .handlerName("sms")
                         .tableName(TABLE)
                         .requeueInterval(120000)
+                        .pollInterval(5000)
                         .processingExpire(Duration.ofMinutes(2))
                         .transientExceptions(Set.of(TransientDataAccessException.class))
                         .taskHandler(new SmsNotifyHandler())

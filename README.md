@@ -13,7 +13,7 @@ The application will start on port `8082` and you can access the following endpo
 
 > NOTE: The task are supposed to run 1 min after the request is made. See `delay` at [NotificationController](src/main/java/com/pcistudio/example/taskprocessor/notification/NotificationController.java).
 
-- `POST http://localhost:8082/api/v1/notify/sms`
+- `POST http://localhost:8082/api/v1/notify/email`
 
 ```json
 {
@@ -22,6 +22,17 @@ The application will start on port `8082` and you can access the following endpo
   "message": "Appointment Tomorrow 2"
 }
 ```
+
+- `POST http://localhost:8082/api/v1/notify/sms`
+
+```json
+{
+  "personName": "John Wick",
+  "phone": "5876485654",
+  "message": "Appointment Tomorrow 2"
+}
+```
+
 You can use the postman collection in the `postman` folder to test the endpoints.
 or you can use the following curl commands:
 

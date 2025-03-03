@@ -35,7 +35,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<task-processor.version>0.0.38</task-processor.version>
+		<task-processor.version>0.0.41</task-processor.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -88,6 +88,17 @@
 			<groupId>com.pcistudio</groupId>
 			<artifactId>task-processor-spring-jdbc-h2</artifactId>
 			<version>${task-processor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.pcistudio</groupId>
+			<artifactId>task-processor-spring-test</artifactId>
+			<version>${task-processor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>4.2.0</version>
+			<scope>test</scope>
 		</dependency>
 		<!-- task-processor dependencies end-->
 	</dependencies>
